@@ -4,8 +4,8 @@
   "description": "Full-stack Leave Management System with Vue.js frontend and Node.js/Express backend",
   "main": "backend/server.js",
   "scripts": {
-    "build": "cd backend && yarn install && cd ../frontend && yarn install && yarn build",
-    "start": "cd backend && yarn start"
+    "build": "npm --prefix ./backend install && npm --prefix ./frontend install && npm --prefix ./frontend run build",
+    "start": "npm --prefix ./backend start"
   },
   "keywords": ["vue", "express", "mongodb", "leave-management"],
   "author": "",
