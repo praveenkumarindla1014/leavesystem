@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const path = require('path');
 
 // Load environment variables
 dotenv.config();
@@ -15,6 +16,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// ───── Serve static files from React/Vue build ─────
+app.use(express.static('../frontend/dist'));
+
 // ───── Routes ─────
 app.get('/', (req, res) => {
   res.json({ message: 'Leave Management System API is running 🚀' });
@@ -22,6 +26,11 @@ app.get('/', (req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/leaves', leaveRoutes);
+
+// ───── Serve React/Vue app for all non-API routes ─────
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+});
 
 // ───── Global Error Handler ─────
 app.use((err, req, res, next) => {

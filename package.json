@@ -1,0 +1,28 @@
+{
+  "name": "leave-management-system",
+  "version": "1.0.0",
+  "description": "Full-stack Leave Management System with Vue.js frontend and Node.js/Express backend",
+  "main": "backend/server.js",
+  "scripts": {
+    "install:backend": "cd backend && npm install",
+    "install:frontend": "cd frontend && npm install",
+    "install:all": "npm run install:backend && npm run install:frontend",
+    "build:frontend": "cd frontend && npm run build",
+    "build": "npm run install:all && npm run build:frontend",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm run dev",
+    "dev": "npm run install:all && concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start": "npm run build && npm run start:backend",
+    "heroku-postbuild": "npm run build:frontend"
+  },
+  "keywords": ["vue", "express", "mongodb", "leave-management"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}
