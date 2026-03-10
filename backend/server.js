@@ -17,7 +17,9 @@ app.use(cors());
 app.use(express.json());
 
 // ───── Serve static files from React/Vue build ─────
-app.use(express.static('../frontend/dist'));
+const distPath = path.join(__dirname, '../frontend/dist');
+console.log(`📁 Serving static files from: ${distPath}`);
+app.use(express.static(distPath));
 
 // ───── Routes ─────
 app.get('/', (req, res) => {
@@ -29,7 +31,14 @@ app.use('/api/leaves', leaveRoutes);
 
 // ───── Serve React/Vue app for all non-API routes ─────
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+  const indexPath = path.join(__dirname, '../frontend/dist/index.html');
+  console.log(`📄 Serving index.html from: ${indexPath}`);
+  res.sendFile(indexPath, (err) => {
+    if (err) {
+      console.error(`❌ Error serving index.html: ${err.message}`);
+      res.status(404).json({ message: 'Page not found' });
+    }
+  });
 });
 
 // ───── Global Error Handler ─────
